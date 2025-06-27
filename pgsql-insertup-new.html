@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>PostgreSQL UPSERT(insert on conflict do)和pgpass使用说明 | 娃娃Code</title><meta name="keywords" content="数据库"><meta name="author" content="娃娃Code"><meta name="copyright" content="娃娃Code"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="PostgreSQL INSERT INTO ON CONFLICT语法。UPSERT(insert on conflict do) 记录存在就更新，不存在就更新。在某些业务场景中，需要把插入语句和更新组合到一起，一条SQL同时完成插入和更新逻辑。这个时候就需要用到 INSERT ON CONFLICT语法特性了。可以实现根据主键或者唯一约束，来插入或指定条件更新。 官方语法说明123456789">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL UPSERT(insert on conflict do)和pgpass使用说明">
+<meta property="og:url" content="https://blog.dollcode.cn/pgsql-insertup-new.html">
+<meta property="og:site_name" content="娃娃Code">
+<meta property="og:description" content="PostgreSQL INSERT INTO ON CONFLICT语法。UPSERT(insert on conflict do) 记录存在就更新，不存在就更新。在某些业务场景中，需要把插入语句和更新组合到一起，一条SQL同时完成插入和更新逻辑。这个时候就需要用到 INSERT ON CONFLICT语法特性了。可以实现根据主键或者唯一约束，来插入或指定条件更新。 官方语法说明123456789">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-12-21T00:00:00.000Z">
+<meta property="article:modified_time" content="2025-06-27T06:34:56.452Z">
+<meta property="article:author" content="娃娃Code">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://blog.dollcode.cn/pgsql-insertup-new"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7aa06d977735ba02878b576bfa4cd274";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-KPRF3Z2EG2"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KPRF3Z2EG2');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#009999","position":"top-right"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'PostgreSQL UPSERT(insert on conflict do)和pgpass使用说明',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-06-27 06:34:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="娃娃Code" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/07/11/43BLq6fk1euSJNm.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">62</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fas fa-folder-open"></i><span> 资源库</span></a></div><div class="menus_item"><a class="site-page" href="/notes/"><i class="fa-fw fas fa-book"></i><span> 小记</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">娃娃Code</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fas fa-folder-open"></i><span> 资源库</span></a></div><div class="menus_item"><a class="site-page" href="/notes/"><i class="fa-fw fas fa-book"></i><span> 小记</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">PostgreSQL UPSERT(insert on conflict do)和pgpass使用说明</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2023-12-21T00:00:00.000Z" title="发表于 2023-12-21 00:00:00">2023-12-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Web%E6%8A%80%E6%9C%AF/">Web技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">692</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="PostgreSQL UPSERT(insert on conflict do)和pgpass使用说明"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>PostgreSQL INSERT INTO ON CONFLICT语法。UPSERT(insert on conflict do) 记录存在就更新，不存在就更新。<br>在某些业务场景中，需要把插入语句和更新组合到一起，一条SQL同时完成插入和更新逻辑。<br>这个时候就需要用到 <code>INSERT ON CONFLICT</code>语法特性了。可以实现根据主键或者唯一约束，来插入或指定条件更新。</p>
+<h1 id="官方语法说明"><a href="#官方语法说明" class="headerlink" title="官方语法说明"></a>官方语法说明</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Command:     <span class="keyword">INSERT</span>  </span><br><span class="line">Description: <span class="keyword">create</span> <span class="keyword">new</span> <span class="keyword">rows</span> <span class="keyword">in</span> a <span class="keyword">table</span>  </span><br><span class="line">Syntax:  </span><br><span class="line">[ <span class="keyword">WITH</span> [ <span class="keyword">RECURSIVE</span> ] with_query [, ...] ]  </span><br><span class="line"><span class="keyword">INSERT INTO</span> table_name [ <span class="keyword">AS</span> alias ] [ ( column_name [, ...] ) ]  </span><br><span class="line">    &#123; <span class="keyword">DEFAULT</span> <span class="keyword">VALUES</span> <span class="operator">|</span> <span class="keyword">VALUES</span> ( &#123; expression <span class="operator">|</span> <span class="keyword">DEFAULT</span> &#125; [, ...] ) [, ...] <span class="operator">|</span> query &#125;  </span><br><span class="line">    [ <span class="keyword">ON</span> CONFLICT [ conflict_target ] conflict_action ]  </span><br><span class="line">    [ RETURNING <span class="operator">*</span> <span class="operator">|</span> output_expression [ [ <span class="keyword">AS</span> ] output_name ] [, ...] ]  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">where</span> conflict_target can be <span class="keyword">one</span> <span class="keyword">of</span>:  </span><br><span class="line">  </span><br><span class="line">    ( &#123; index_column_name <span class="operator">|</span> ( index_expression ) &#125; [ <span class="keyword">COLLATE</span> <span class="keyword">collation</span> ] [ opclass ] [, ...] ) [ <span class="keyword">WHERE</span> index_predicate ]  </span><br><span class="line">    <span class="keyword">ON</span> <span class="keyword">CONSTRAINT</span> constraint_name  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">and</span> conflict_action <span class="keyword">is</span> <span class="keyword">one</span> <span class="keyword">of</span>:  </span><br><span class="line">  </span><br><span class="line">    DO NOTHING  </span><br><span class="line">    DO <span class="keyword">UPDATE</span> <span class="keyword">SET</span> &#123; column_name <span class="operator">=</span> &#123; expression <span class="operator">|</span> <span class="keyword">DEFAULT</span> &#125; <span class="operator">|</span>  </span><br><span class="line">                    ( column_name [, ...] ) <span class="operator">=</span> ( &#123; expression <span class="operator">|</span> <span class="keyword">DEFAULT</span> &#125; [, ...] ) <span class="operator">|</span>  </span><br><span class="line">                    ( column_name [, ...] ) <span class="operator">=</span> ( sub<span class="operator">-</span><span class="keyword">SELECT</span> )  </span><br><span class="line">                  &#125; [, ...]  </span><br><span class="line">              [ <span class="keyword">WHERE</span> <span class="keyword">condition</span> ]  </span><br></pre></td></tr></table></figure>
+
+
+<p>假如我们有这样一张日志表，要同时实现写入和更新。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> user_log_info (</span><br><span class="line">    log_id text <span class="keyword">NOT NULL</span>,</span><br><span class="line">    log_name text,</span><br><span class="line">    log_path text,</span><br><span class="line">    log_size <span class="type">bigint</span>,</span><br><span class="line">    log_time <span class="type">timestamp</span>,</span><br><span class="line">    create_time <span class="type">timestamp</span>,</span><br><span class="line">    <span class="keyword">PRIMARY KEY</span> (log_id,log_time)</span><br><span class="line">) </span><br></pre></td></tr></table></figure>
+<h1 id="根据主键新增或更新"><a href="#根据主键新增或更新" class="headerlink" title="根据主键新增或更新"></a>根据主键新增或更新</h1><blockquote>
+<p>符合写入日志时间比当前记录新，才执行写入更新</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT INTO</span> user_log_info</span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line">	( <span class="string">&#x27;demo001&#x27;</span>, <span class="string">&#x27;open1&#x27;</span>, <span class="string">&#x27;/logs/a.log&#x27;</span>, <span class="number">30</span>, TO_TIMESTAMP( <span class="number">1713509590</span> ), <span class="built_in">LOCALTIMESTAMP</span> ) <span class="keyword">ON</span> CONFLICT ( log_id, log_time ) DO</span><br><span class="line"><span class="keyword">UPDATE</span> </span><br><span class="line">	<span class="keyword">SET</span> log_name <span class="operator">=</span> EXCLUDED.log_name,</span><br><span class="line">	log_path <span class="operator">=</span> EXCLUDED.log_path,</span><br><span class="line">	log_size <span class="operator">=</span> EXCLUDED.log_size,</span><br><span class="line">	log_time <span class="operator">=</span> EXCLUDED.log_time,</span><br><span class="line">	create_time <span class="operator">=</span> EXCLUDED.create_time </span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	EXCLUDED.log_time <span class="operator">&gt;</span> user_log_info.log_time</span><br></pre></td></tr></table></figure>
+
+<h1 id="根据符合条件才更新"><a href="#根据符合条件才更新" class="headerlink" title="根据符合条件才更新"></a>根据符合条件才更新</h1><blockquote>
+<p>举例：符合日志size大小，比之前大才会更新，SQL如下</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT INTO</span> user_log_info</span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line">	( <span class="string">&#x27;demo001&#x27;</span>, <span class="string">&#x27;open1&#x27;</span>, <span class="string">&#x27;/logs/a.log&#x27;</span>, <span class="number">30</span>, TO_TIMESTAMP( <span class="number">1713509590</span> ), <span class="built_in">LOCALTIMESTAMP</span> ) <span class="keyword">ON</span> CONFLICT ( log_id, log_time ) DO</span><br><span class="line"><span class="keyword">UPDATE</span> </span><br><span class="line">	<span class="keyword">SET</span> log_name <span class="operator">=</span> EXCLUDED.log_name,</span><br><span class="line">	log_path <span class="operator">=</span> EXCLUDED.log_path,</span><br><span class="line">	log_size <span class="operator">=</span> EXCLUDED.log_size,</span><br><span class="line">	log_time <span class="operator">=</span> EXCLUDED.log_time,</span><br><span class="line">	create_time <span class="operator">=</span> EXCLUDED.create_time </span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	EXCLUDED.log_size <span class="operator">&gt;</span> user_log_info.log_size</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h1><p>相当于我们在写入数据时，可以像写查询一样 带上WHERE条件，实现符合条件才更新</p>
+<h1 id="PGSQL定时任务实现"><a href="#PGSQL定时任务实现" class="headerlink" title="PGSQL定时任务实现"></a>PGSQL定时任务实现</h1><p>cron + pgpass<br>利用shell脚本 + Linux定时任务，去定时执行清理日志表</p>
+<h2 id="首先配置命令行免密登录"><a href="#首先配置命令行免密登录" class="headerlink" title="首先配置命令行免密登录"></a>首先配置命令行免密登录</h2><p>根据Postgres的官方文档配置.pgpass。</p>
+<blockquote>
+<p>文件内容格式如下：127.0.0.1:5432:库名:用户:密码</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">登录服务器，在用户主目录中创建`.pgpass`文件配置</span><br><span class="line">vi .pgpass</span><br><span class="line">127.0.0.1:5432:demo_test:postgres:123456</span><br><span class="line"></span><br><span class="line">// 授权当前用户可见</span><br><span class="line"><span class="built_in">chmod</span> 600 .pgpass</span><br><span class="line"></span><br><span class="line">// 执行验证测试，查询连接用户数SQL</span><br><span class="line">/usr/pgsql-13/bin/psql -h 127.0.0.1 -p 5432 -d demo_test  -U postgres  -c <span class="string">&quot;select COUNT(*) from pg_stat_activity&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="编写shell脚本封装SQL"><a href="#编写shell脚本封装SQL" class="headerlink" title="编写shell脚本封装SQL"></a>编写shell脚本封装SQL</h2><p>vim pgcron.sh。文件内容如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行方法处理</span></span><br><span class="line"><span class="function"><span class="title">execpgsql</span></span>()&#123;</span><br><span class="line">  <span class="built_in">echo</span> <span class="variable">$1</span></span><br><span class="line">  starttime=`<span class="built_in">date</span> +<span class="string">&quot;%Y-%m-%d %H:%M.%S&quot;</span>` </span><br><span class="line">  result=$(/usr/pgsql-13/bin/psql -h 127.0.0.1 -p 5432 -d demo_test  -U postgres  -c <span class="string">&quot;<span class="variable">$1</span>&quot;</span>)</span><br><span class="line">  endtime=`<span class="built_in">date</span> +<span class="string">&quot;%Y-%m-%d %H:%M.%S&quot;</span>`</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;[开始执行:<span class="variable">$starttime</span>&quot;</span> <span class="string">&quot;执行结束:<span class="variable">$endtime</span>]&quot;</span> <span class="string">&quot;SQL:<span class="variable">$1</span>&quot;</span> <span class="string">&quot;结果:<span class="variable">$result</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定时删除表</span></span><br><span class="line">sql=<span class="string">&quot;DROP TABLE user_log_info&quot;</span></span><br><span class="line">execpgsql <span class="string">&quot;<span class="variable">$sql</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>再将这个脚本加入 crontab，并设定执行周期</p>
+</blockquote>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/dbgpt-xunfeispark.html"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">DB-GPT本地部署体验讯飞星火大模型V3.5</div></div></a></div><div class="next-post pull-right"><a href="/primary-or-secondary-postgresql.html"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">搭建PostgreSQL主从架构</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E"><span class="toc-number">1.</span> <span class="toc-text">官方语法说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%B9%E6%8D%AE%E4%B8%BB%E9%94%AE%E6%96%B0%E5%A2%9E%E6%88%96%E6%9B%B4%E6%96%B0"><span class="toc-number">2.</span> <span class="toc-text">根据主键新增或更新</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%B9%E6%8D%AE%E7%AC%A6%E5%90%88%E6%9D%A1%E4%BB%B6%E6%89%8D%E6%9B%B4%E6%96%B0"><span class="toc-number">3.</span> <span class="toc-text">根据符合条件才更新</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">4.</span> <span class="toc-text">实际应用场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PGSQL%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.</span> <span class="toc-text">PGSQL定时任务实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A6%96%E5%85%88%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95"><span class="toc-number">5.1.</span> <span class="toc-text">首先配置命令行免密登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E5%86%99shell%E8%84%9A%E6%9C%AC%E5%B0%81%E8%A3%85SQL"><span class="toc-number">5.2.</span> <span class="toc-text">编写shell脚本封装SQL</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2025 By 娃娃Code</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Never complain, never explain</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script>((window.gitter = {}).chat = {}).options = {
+  disableDefaultChat: true,
+};
+document.addEventListener('gitter-sidecar-ready', (e) => {
+  const GitterChat = e.detail.Chat
+  let chat
+
+  function initGitter () {
+    chat = new GitterChat({
+      room: 'dollcode/community',
+      activationElement: '#chat_btn'
+    });
+  }
+
+  initGitter()
+
+  if (false) {
+    document.addEventListener('pjax:complete', () => {
+      chat.destroy()
+      initGitter()
+    })
+  }
+
+})</script><script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async="async" defer="defer"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

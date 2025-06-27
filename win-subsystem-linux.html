@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>win10开启Linux子系统教程 | 娃娃Code</title><meta name="keywords" content="Linux"><meta name="author" content="娃娃Code"><meta name="copyright" content="娃娃Code"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="Win10子系统Ubuntu-18.04windows subsystem for linux简称WSL。使用原生安装方便快捷，无需再安装虚拟机，从安装到运行最全教程，并开启SSH开机自启，用xshell终端连接。 1. 开启Linux子系统环境打开所有设置 -&gt; 应用 -&gt; 程序和功能 -&gt; 启动或关闭Windows功能 -&gt; 勾选适用于Linux的Windows子系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="win10开启Linux子系统教程">
+<meta property="og:url" content="https://blog.dollcode.cn/win-subsystem-linux.html">
+<meta property="og:site_name" content="娃娃Code">
+<meta property="og:description" content="Win10子系统Ubuntu-18.04windows subsystem for linux简称WSL。使用原生安装方便快捷，无需再安装虚拟机，从安装到运行最全教程，并开启SSH开机自启，用xshell终端连接。 1. 开启Linux子系统环境打开所有设置 -&gt; 应用 -&gt; 程序和功能 -&gt; 启动或关闭Windows功能 -&gt; 勾选适用于Linux的Windows子系统">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-16T00:00:00.000Z">
+<meta property="article:modified_time" content="2025-06-27T06:34:56.452Z">
+<meta property="article:author" content="娃娃Code">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://blog.dollcode.cn/win-subsystem-linux"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7aa06d977735ba02878b576bfa4cd274";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-KPRF3Z2EG2"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KPRF3Z2EG2');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#009999","position":"top-right"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'win10开启Linux子系统教程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-06-27 06:34:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="娃娃Code" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/07/11/43BLq6fk1euSJNm.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">62</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fas fa-folder-open"></i><span> 资源库</span></a></div><div class="menus_item"><a class="site-page" href="/notes/"><i class="fa-fw fas fa-book"></i><span> 小记</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">娃娃Code</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fas fa-folder-open"></i><span> 资源库</span></a></div><div class="menus_item"><a class="site-page" href="/notes/"><i class="fa-fw fas fa-book"></i><span> 小记</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">win10开启Linux子系统教程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2022-05-16T00:00:00.000Z" title="发表于 2022-05-16 00:00:00">2022-05-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Web%E6%8A%80%E6%9C%AF/">Web技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">688</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="win10开启Linux子系统教程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h1 id="Win10子系统Ubuntu-18-04"><a href="#Win10子系统Ubuntu-18-04" class="headerlink" title="Win10子系统Ubuntu-18.04"></a>Win10子系统Ubuntu-18.04</h1><p>windows subsystem for linux简称WSL。使用原生安装方便快捷，无需再安装虚拟机，从安装到运行最全教程，并开启SSH开机自启，用xshell终端连接。</p>
+<h2 id="1-开启Linux子系统环境"><a href="#1-开启Linux子系统环境" class="headerlink" title="1. 开启Linux子系统环境"></a>1. 开启Linux子系统环境</h2><p>打开所有设置 -&gt; 应用 -&gt; 程序和功能 -&gt; 启动或关闭Windows功能 -&gt; 勾选适用于Linux的Windows子系统 -&gt; 重启电脑<br><img src="https://s2.loli.net/2022/05/16/7z3ETes96ZcDuvi.png"></p>
+<h2 id="2-Microsoft-Store安装Ubuntu"><a href="#2-Microsoft-Store安装Ubuntu" class="headerlink" title="2. Microsoft Store安装Ubuntu"></a>2. Microsoft Store安装Ubuntu</h2><p>打开Microsoft Store应用商店，搜索Ubuntu-18.04，下载完成之后。点击图标打开，进行安装。<br><img src="https://s2.loli.net/2022/05/16/q6lsPM489Ljbxak.png"></p>
+<p>在出现需要输入username的时候，就已经安装完成了，可以选择创建自己的用户名。但是我不想创建用户，想直接用root用户，怎么办呢？<br><img src="https://s2.loli.net/2022/05/16/92QihzNkXsfw5E6.png"></p>
+<p>很简单，在Microsoft Store应用商店搜索<strong>Windows Terminal</strong>下载并打开。点击下箭头，选中Ubuntu-18.04。就自动以root用户登录了。<br><img src="https://s2.loli.net/2022/05/16/Hn389aFvVduz7p1.png"><br><img src="https://s2.loli.net/2022/05/16/sbkhndyoH9TSGi3.png"><br>这个时候，我们就可以自己设置root的密码，输入命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">--设置root账号密码。根据提示输入两次密码即可设置成功。</span><br><span class="line"><span class="built_in">sudo</span> passwd root</span><br><span class="line">Enter new UNIX password:</span><br><span class="line">Retype new UNIX password:</span><br><span class="line">passwd: password updated successfully</span><br></pre></td></tr></table></figure>
+
+<p>通过<code>Windows Terminal</code>终端其实就已经满足我们的连接需求了，但是想通过自定义的终端软件连接怎么操作呢？继续往下瞧，我拿Xshell举例。</p>
+<h2 id="3-配置openssh-server"><a href="#3-配置openssh-server" class="headerlink" title="3. 配置openssh-server"></a>3. 配置openssh-server</h2><h3 id="卸载重装一遍ssh服务（防止子系统openssh组件不完整）"><a href="#卸载重装一遍ssh服务（防止子系统openssh组件不完整）" class="headerlink" title="卸载重装一遍ssh服务（防止子系统openssh组件不完整）"></a>卸载重装一遍ssh服务（防止子系统openssh组件不完整）</h3><p>首先先执行 <code>apt-get update</code> 更新源信息，再操作安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 中间确定选 “Y”</span></span><br><span class="line">apt-get remove openssh-server</span><br><span class="line">apt-get install openssh-server</span><br></pre></td></tr></table></figure>
+<h3 id="编辑sshd-config文件-只需修改这三项就行"><a href="#编辑sshd-config文件-只需修改这三项就行" class="headerlink" title="编辑sshd_config文件(只需修改这三项就行)"></a>编辑sshd_config文件(只需修改这三项就行)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br><span class="line">Port 2222 <span class="comment">#设置ssh的端口号, 默认22，但22在windows中可能会端口冲突</span></span><br><span class="line">PermitRootLogin <span class="built_in">yes</span> <span class="comment"># 可以root远程登录</span></span><br><span class="line">PasswordAuthentication <span class="built_in">yes</span> <span class="comment"># 密码验证登录</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://s2.loli.net/2022/05/16/a4hsbSmJ9dWGjyf.png"></p>
+<h3 id="执行重启ssh服务"><a href="#执行重启ssh服务" class="headerlink" title="执行重启ssh服务"></a>执行重启ssh服务</h3><p>sudo service ssh –full-restart</p>
+<h3 id="Xshell连接"><a href="#Xshell连接" class="headerlink" title="Xshell连接"></a>Xshell连接</h3><p><img src="https://s2.loli.net/2022/05/16/I3zOCWt4ZXAoeqi.png"><br>输入root账号密码，登录成功！！！ 大功告成</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><blockquote>
+<p>有一个问题：电脑关机重启之后，xshell就会连接不上。</p>
+</blockquote>
+<p><strong>这是因为Window子系统的SSH是默认关闭的，电脑关机或重启之后，子系统的SSH又会自动关闭，所以需要设置自动启动脚本</strong></p>
+<h3 id="编写vbs自启ssh脚本"><a href="#编写vbs自启ssh脚本" class="headerlink" title="编写vbs自启ssh脚本"></a>编写vbs自启ssh脚本</h3><p>输入 <code>Win + R</code> 打运行窗口输入 <code>shell:startup</code> 进入Windows自启目录，在这个目录新建一个 <code>openssh.vbs</code> 文件（文件名称随意，后缀名是.vbs）</p>
+<p>文件内容如下两行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Set ws = CreateObject(<span class="string">&quot;Wscript.Shell&quot;</span>)</span><br><span class="line">ws.run <span class="string">&quot;wsl -d Ubuntu-18.04 -u root /etc/init.d/ssh start&quot;</span>, vbhide</span><br></pre></td></tr></table></figure>
+
+<p>保存文件之后，双击执行，如果没有报错，再用xshell重新连接发现就可以了。</p>
+<p>如果报错了，检查一下文件的编码是不是<code>ANSI</code>，改编码再保存一下就可以了</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/configuration-validated.html"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">通过@ConfigurationProperties注解配置属性并校验参数</div></div></a></div><div class="next-post pull-right"><a href="/filebrowser-mirouter.html"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">小米路由器安装filebrowser</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/centos-iptables-config.html" title="Centos7.3防火墙配置"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-18</div><div class="title">Centos7.3防火墙配置</div></div></a></div><div><a href="/the-nginx-software.html" title="nginx常用命令和基本操作及问题解决"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-10-19</div><div class="title">nginx常用命令和基本操作及问题解决</div></div></a></div><div><a href="/StudyVideo.html" title="看了不一定会,不看肯定不会系列"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-11-06</div><div class="title">看了不一定会,不看肯定不会系列</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Win10%E5%AD%90%E7%B3%BB%E7%BB%9FUbuntu-18-04"><span class="toc-number">1.</span> <span class="toc-text">Win10子系统Ubuntu-18.04</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%BC%80%E5%90%AFLinux%E5%AD%90%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83"><span class="toc-number">1.1.</span> <span class="toc-text">1. 开启Linux子系统环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Microsoft-Store%E5%AE%89%E8%A3%85Ubuntu"><span class="toc-number">1.2.</span> <span class="toc-text">2. Microsoft Store安装Ubuntu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E9%85%8D%E7%BD%AEopenssh-server"><span class="toc-number">1.3.</span> <span class="toc-text">3. 配置openssh-server</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B8%E8%BD%BD%E9%87%8D%E8%A3%85%E4%B8%80%E9%81%8Dssh%E6%9C%8D%E5%8A%A1%EF%BC%88%E9%98%B2%E6%AD%A2%E5%AD%90%E7%B3%BB%E7%BB%9Fopenssh%E7%BB%84%E4%BB%B6%E4%B8%8D%E5%AE%8C%E6%95%B4%EF%BC%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">卸载重装一遍ssh服务（防止子系统openssh组件不完整）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%BE%91sshd-config%E6%96%87%E4%BB%B6-%E5%8F%AA%E9%9C%80%E4%BF%AE%E6%94%B9%E8%BF%99%E4%B8%89%E9%A1%B9%E5%B0%B1%E8%A1%8C"><span class="toc-number">1.3.2.</span> <span class="toc-text">编辑sshd_config文件(只需修改这三项就行)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E9%87%8D%E5%90%AFssh%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.3.3.</span> <span class="toc-text">执行重启ssh服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xshell%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.3.4.</span> <span class="toc-text">Xshell连接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.4.</span> <span class="toc-text">注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E5%86%99vbs%E8%87%AA%E5%90%AFssh%E8%84%9A%E6%9C%AC"><span class="toc-number">1.4.1.</span> <span class="toc-text">编写vbs自启ssh脚本</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2025 By 娃娃Code</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Never complain, never explain</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script>((window.gitter = {}).chat = {}).options = {
+  disableDefaultChat: true,
+};
+document.addEventListener('gitter-sidecar-ready', (e) => {
+  const GitterChat = e.detail.Chat
+  let chat
+
+  function initGitter () {
+    chat = new GitterChat({
+      room: 'dollcode/community',
+      activationElement: '#chat_btn'
+    });
+  }
+
+  initGitter()
+
+  if (false) {
+    document.addEventListener('pjax:complete', () => {
+      chat.destroy()
+      initGitter()
+    })
+  }
+
+})</script><script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async="async" defer="defer"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

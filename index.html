@@ -1,0 +1,242 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>娃娃Code - Blog</title><meta name="keywords" content="Blog,博客,后端,全栈,数据库"><meta name="author" content="娃娃Code"><meta name="copyright" content="娃娃Code"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="技术博客分享,生活分享,Java,Mysql,Flink,Maxcompute,Kafka,后端技术栈">
+<meta property="og:type" content="website">
+<meta property="og:title" content="娃娃Code">
+<meta property="og:url" content="https://blog.dollcode.cn/index.html">
+<meta property="og:site_name" content="娃娃Code">
+<meta property="og:description" content="技术博客分享,生活分享,Java,Mysql,Flink,Maxcompute,Kafka,后端技术栈">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/07/11/43BLq6fk1euSJNm.png">
+<meta property="article:author" content="娃娃Code">
+<meta property="article:tag" content="Blog,博客,后端,全栈,数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/07/11/43BLq6fk1euSJNm.png"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://blog.dollcode.cn/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7aa06d977735ba02878b576bfa4cd274";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-KPRF3Z2EG2"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KPRF3Z2EG2');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#009999","position":"top-right"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '娃娃Code',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2025-06-27 06:35:41'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="娃娃Code" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/07/11/43BLq6fk1euSJNm.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">62</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fas fa-folder-open"></i><span> 资源库</span></a></div><div class="menus_item"><a class="site-page" href="/notes/"><i class="fa-fw fas fa-book"></i><span> 小记</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">娃娃Code</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fas fa-folder-open"></i><span> 资源库</span></a></div><div class="menus_item"><a class="site-page" href="/notes/"><i class="fa-fw fas fa-book"></i><span> 小记</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/xiaomiBE7000-dockerup.html" title="小米路由器BE7000的Docker权限不足问题解决">小米路由器BE7000的Docker权限不足问题解决</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-12-09T00:00:00.000Z" title="发表于 2024-12-09 00:00:00">2024-12-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%94%9F%E6%B4%BB%E7%90%90%E4%BA%8B/">生活琐事</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a></span></div><div class="content">Error response from daemon: authorization denied by plugin opa-docker-authz: request rejected by administrative policy。小米路由器BE7000，docker run 权限提升问题解决方案。
+手上有一台MiWiFi For Xiaomi路由器BE7000 稳定版。这个路由器硬件配置还不错，而且支持Docker。刚好从网上看到有解锁SSH的教程。(SSH教程，在恩山找就行)于是在开启SSH之后，尝试跑几个docker容器，结果遇到了这个错误：Error response from daemon: authorization denied by plugin opa-docker-authz: request rejected by administrative policy。
+原来这个路由器默认的docker初始化加入了opa权限插件。这个插件opa-docker-authz 是一个使用 Open Policy Agent (OPA) 实现的 Docker 容器授权插件，用 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/cloudflare-ddns.html" title="cloudflare ddns通过API更新动态IP域名解析">cloudflare ddns通过API更新动态IP域名解析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-11-04T00:00:00.000Z" title="发表于 2024-11-04 00:00:00">2024-11-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Web%E6%8A%80%E6%9C%AF/">Web技术</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a></span></div><div class="content">Cloudflare的DDNS功能使用，通过Linux定时任务配合shell脚本，完成动态IP的域名解析。适用于家庭网络公网IP不固定的情况。
+创建一个API密钥登录Cloudflare之后 -&gt; 点击页面右上角的个人中心 -&gt; 进入My Profile -&gt; 进入API token也可以直接访问链接：https://dash.cloudflare.com/profile/api-tokens
+创建一个Token，选择模板Edit zone DNS
+
+点击 提交确认之后，复制token并保存起来. (注意这个Token只会展示这一次，忘记了就只能重新创建一个Token)
+
+编写脚本，验证流程123456789101112131415161718192021222324252627282930313233343536373839404142#!/bin/bash# Cloudflare API令牌API_TOKEN=&quot;填token&quot;# Cloudflare Zone IDZONE_ID=&quot;填Zone ID&quot;# DNS记录ID（需要 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/linux-newfrp.html" title="新版FRP内网穿透搭建使用">新版FRP内网穿透搭建使用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-09-07T00:00:00.000Z" title="发表于 2024-09-07 00:00:00">2024-09-07</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Web%E6%8A%80%E6%9C%AF/">Web技术</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a></span></div><div class="content">新版的配置文件有比较大的改动，这里记录一下安装部署过程，官网文档在这里 https://gofrp.org/zh-cn/docs/setup下载安装地址 https://github.com/fatedier/frp/releases当前最新版0.60.0
+服务端安装首先是服务端，需要在一台公网机器上部署。这里我们自己下载 选择自己机器对应平台的压缩包 我这里选https://github.com/fatedier/frp/releases/download/v0.60.0/frp_0.60.0_linux_amd64.tar.gz
+12345678// 下载wget https://github.com/fatedier/frp/releases/download/v0.60.0/frp_0.60.0_linux_amd64.tar.gz// 解压tar zxvf frp_0.60.0_linux_amd64.tar.gz// 进入目录cd frp_0.60.0_linux_amd64// 设置可执行权限chmod +x frps
+
+可以看到目录下有两对执行文件和配置文件， 分别对应 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/docker-gitlab-runner.html" title="Docker搭建gitlab-runner利用CICD部署Springboot微服务到K8s集群">Docker搭建gitlab-runner利用CICD部署Springboot微服务到K8s集群</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-08-19T00:00:00.000Z" title="发表于 2024-08-19 00:00:00">2024-08-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/Springboot/">Springboot</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/Docker/">Docker</a></span></div><div class="content">在DevOps工作流中，CICD持续集成持续部署是重要的一环。GitLab CI&#x2F;CD 是 GitLab 的一部分，因此不需要单独安装。如果你已经在使用 GitLab 进行代码管理，GitLab CI&#x2F;CD 无缝集成，直接在同一个平台上管理代码、审查合并请求、自动化测试和部署。这种集成度简化了开发流程，使用起来非常方便。
+
+前提条件：已经在使用Gitlab做代码管理、机器已安装Docker环境目标：Docker搭建gitlab-runner，用gitgitlab-ci.yml脚本、Maven打包Springboot微服务、上传到Docker镜像仓库、远程部署到K8s集群
+
+docker安装gitlab-runner在Gitlab中Runner可以注册到 项目（Project）、群组（Group） 或 所有项目（All projects），这里注册到最大的，所有项目和组都可以用这个Runner
+还需要查看当前在用的Gitlab的安装版本，选择一致的版本。避免gitlab-runner版本跨度过大导致出现问题。
+1.先注册生成得到一个配置文件config.toml
+12 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/dashboard-ngrok.html" title="ngrok内网穿透注册使用无需实名">ngrok内网穿透注册使用无需实名</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-08-08T00:00:00.000Z" title="发表于 2024-08-08 00:00:00">2024-08-08</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Web%E6%8A%80%E6%9C%AF/">Web技术</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Software/">Software</a></span></div><div class="content">开箱即用的内网穿透的工具有很多很多，但是由于国内环境需要实名认证劝退了。发现dashboard.ngrok.com注册即用，带https。而且控制台体验特别好，简直是傻瓜式。引导做的太棒了！！！所以这里简单记录一下，因为控制台的交互设计已经非常完善了。
+注册ngrok.com打开官网：https://dashboard.ngrok.com 用邮箱注册，然后邮件激活账号即可。
+
+最新情况： HTTP隧道可以直接用，TCP隧道需要绑卡
+
+123You must add a credit or debit card before you can use TCP endpoints on a free account. We require a valid card as a way to combat abuse and keep the internet a safe place. This card will NOT be charged. Add a card to your account here: https://dashboard.ngrok.com/settings#id-v ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/ubuntu-grub-encrypt.html" title="ubuntu设置grub密码实现加密开机启动">ubuntu设置grub密码实现加密开机启动</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-08-02T00:00:00.000Z" title="发表于 2024-08-02 00:00:00">2024-08-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Web%E6%8A%80%E6%9C%AF/">Web技术</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a></span></div><div class="content">先看效果，在机器开机进入引导时会先进入一个用户名密码验证界面，通过之后才会进入启动流程。并且如果想操作引导其他项，也必须输入密码。类似于密钥启动验证的效果！
+
+假设我们设置用户名为：dollcode 密码为：123456
+
+步骤 1：生成加密密码
+123sudo grub-mkpasswd-pbkdf2// 输入并二次确认密码后，会输出一个加密后的密码字符串，类似如下所示：PBKDF2 hash of your password is grub.pbkdf2.sha512.10000.2932A1217B661566186EE6213A992F6296F947F44E2A52E01EC42B3C0DD079342363378E52A7C0307F78027595FDD9F72C4788E66B74F66D9B154957818CAE0D.FC379727A4D967F4F1C2A03B0284021E8F209253BA3380C6F9D04391C27FCB072DE367ADC64540B6EE809E261DF0EEB0EF0568CFA74FD383C77F2A05DD1EA5 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/jdk17-docker.html" title="Docker自定义JDK17 JRE精简镜像">Docker自定义JDK17 JRE精简镜像</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-08-01T00:00:00.000Z" title="发表于 2024-08-01 00:00:00">2024-08-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Web%E6%8A%80%E6%9C%AF/">Web技术</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Java/">Java</a></span></div><div class="content">由于官方的openJDK17镜像近500MB，属于太大，不利于微服务镜像打包部署。所以自定义基于alpine 3.18 和 openjdk 17 制作JRE镜像，构建Springboot项目镜像(JRE是java运行环境，不包含开发工具所以小)。先看结论，一共测试了三种方式。
+
+注意：只编译java SE平台的Jre环境在运行Springboot项目会有问题，精简过头也不行，少了依赖。！！！推荐用jre17all，这是完整的JRE环境包，测试是完全没问题的。
+
+
+jre17se 只构建了javaSE平台模块包的JRE环境的镜像
+jre17all 构建了所有包模块的JRE环境的镜像
+jre17   直接用adoptium下载的JRE来创建的镜像
+openjdk  官方的镜像
+
+12345&gt;docker imagesjre17se          latest            cd9e997465f6        7 seconds ago      81MBjre17all         latest            8d7173e8cdd9        8 m ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/docker-yapi.html" title="docker-compose一键部署yapi接口文档">docker-compose一键部署yapi接口文档</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-05-24T00:00:00.000Z" title="发表于 2024-05-24 00:00:00">2024-05-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/Docker/">Docker</a></span></div><div class="content">yapi 已经很久没人更新和维护，但界面和功能还是挺不错的，支持从Swagger快速导入更新接口，适合团队接口文档管理和存档。官方并没有直接封装docker镜像，但是有一个二次开发的 YAPIPro镜像。https://hub.docker.com/r/yapipro/yapi 提供了部署文档，但是步骤有点多。于是动手自定义了docker-compose.yml实现快速部署。
+前提准备机器已安装docker-compose
+创建一个目录，接下来安装操作都在这个目录下操作。目录名称就叫 yapi 吧
+12mkdir yapicd yapi
+
+我们需要安装 yapi 和 mongodb 两个容器。并且需要提前创建mongodb的用户信息，并设置用户名和密码所以需要准备一个脚本文件 init-mongo.js
+1234567db = db.getSiblingDB(&#x27;yapi&#x27;);db.createUser(&#123;  user: &quot;yapiblog&quot;,  pwd: &quot;yapi666&quot;,  roles: [&#123; role ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/dbgpt-xunfeispark.html" title="DB-GPT本地部署体验讯飞星火大模型V3.5">DB-GPT本地部署体验讯飞星火大模型V3.5</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-04-19T00:00:00.000Z" title="发表于 2024-04-19 00:00:00">2024-04-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Web%E6%8A%80%E6%9C%AF/">Web技术</a></span></div><div class="content">首先我们从 DB-GPT官网，可以得到的https://docs.dbgpt.site/docs/latest/quickstartDB-GPT是一个开源的AI原生数据应用开发框架(AI Native Data App Development framework with AWEL(Agentic Workflow Expression Language) and Agents)。目的是构建大模型领域的基础设施，通过开发多模型管理(SMMF)、Text2SQL效果优化、RAG框架以及优化、Multi-Agents框架协作、AWEL(智能体工作流编排)等多种技术能力，让围绕数据库构建大模型应用更简单，更方便。数据3.0 时代，基于模型、数据库，企业&#x2F;开发者可以用更少的代码搭建自己的专属应用
+本次 我们通过代理模型方式，使用讯飞星火大模型3.5版本，来进行验证部署。
+
+需要提前将Miniconda环境安装
+
+环境配置首先根据官方文档说明，下载源码，并配置环境(python &gt;&#x3D; 3.10)
+1234// 拉取源码git clone https://github.c ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/pgsql-insertup-new.html" title="PostgreSQL UPSERT(insert on conflict do)和pgpass使用说明">PostgreSQL UPSERT(insert on conflict do)和pgpass使用说明</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-21T00:00:00.000Z" title="发表于 2023-12-21 00:00:00">2023-12-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Web%E6%8A%80%E6%9C%AF/">Web技术</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span></div><div class="content">PostgreSQL INSERT INTO ON CONFLICT语法。UPSERT(insert on conflict do) 记录存在就更新，不存在就更新。在某些业务场景中，需要把插入语句和更新组合到一起，一条SQL同时完成插入和更新逻辑。这个时候就需要用到 INSERT ON CONFLICT语法特性了。可以实现根据主键或者唯一约束，来插入或指定条件更新。
+官方语法说明12345678910111213141516171819202122Command:     INSERT  Description: create new rows in a table  Syntax:  [ WITH [ RECURSIVE ] with_query [, ...] ]  INSERT INTO table_name [ AS alias ] [ ( column_name [, ...] ) ]      &#123; DEFAULT VALUES | VALUES ( &#123; expression | DEFAULT &#125; [, ...] ) [, ...] | que ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#content-inner">7</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2022/07/11/43BLq6fk1euSJNm.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">娃娃Code</div><div class="author-info__description">day day up</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">62</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="/about/" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="/about/" target="_blank" title="Wechat"><i class="fab fa-weixin"></i></a><a class="social-icon" href="https://github.com/yzengchn" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:yzengchn@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">第一步要努力实现自我价值</br> 第二步要全力照顾好家人</br> 第三步要尽可能帮助善良的的人</br> 第四步为族群发声</br> 第五步为国家争荣誉</br> 前两步成功，人生已算得上圆满</br> 做到第三步堪称伟大，而随意颠倒次序的那些人，一般不值得信任</br>-- 电影教父台词</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/xiaomiBE7000-dockerup.html" title="小米路由器BE7000的Docker权限不足问题解决">小米路由器BE7000的Docker权限不足问题解决</a><time datetime="2024-12-09T00:00:00.000Z" title="发表于 2024-12-09 00:00:00">2024-12-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/cloudflare-ddns.html" title="cloudflare ddns通过API更新动态IP域名解析">cloudflare ddns通过API更新动态IP域名解析</a><time datetime="2024-11-04T00:00:00.000Z" title="发表于 2024-11-04 00:00:00">2024-11-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/linux-newfrp.html" title="新版FRP内网穿透搭建使用">新版FRP内网穿透搭建使用</a><time datetime="2024-09-07T00:00:00.000Z" title="发表于 2024-09-07 00:00:00">2024-09-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/docker-gitlab-runner.html" title="Docker搭建gitlab-runner利用CICD部署Springboot微服务到K8s集群">Docker搭建gitlab-runner利用CICD部署Springboot微服务到K8s集群</a><time datetime="2024-08-19T00:00:00.000Z" title="发表于 2024-08-19 00:00:00">2024-08-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/dashboard-ngrok.html" title="ngrok内网穿透注册使用无需实名">ngrok内网穿透注册使用无需实名</a><time datetime="2024-08-08T00:00:00.000Z" title="发表于 2024-08-08 00:00:00">2024-08-08</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Web%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">Web技术</span><span class="card-category-list-count">26</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/"><span class="card-category-list-name">前端</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="card-category-list-name">数据库</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"><span class="card-category-list-name">服务器</span><span class="card-category-list-count">9</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%94%9F%E6%B4%BB%E7%90%90%E4%BA%8B/"><span class="card-category-list-name">生活琐事</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%AC%94%E8%AE%B0/"><span class="card-category-list-name">笔记</span><span class="card-category-list-count">13</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6%E6%95%99%E7%A8%8B/"><span class="card-category-list-name">软件教程</span><span class="card-category-list-count">9</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/CentOS/" style="font-size: 1.34em; color: rgb(87, 149, 28)">CentOS</a><a href="/tags/Linux/" style="font-size: 1.45em; color: rgb(1, 127, 68)">Linux</a><a href="/tags/markdown/" style="font-size: 1.15em; color: rgb(103, 134, 111)">markdown</a><a href="/tags/Software/" style="font-size: 1.38em; color: rgb(126, 39, 63)">Software</a><a href="/tags/Java/" style="font-size: 1.41em; color: rgb(194, 110, 130)">Java</a><a href="/tags/Springboot/" style="font-size: 1.3em; color: rgb(28, 159, 184)">Springboot</a><a href="/tags/centOS/" style="font-size: 1.15em; color: rgb(0, 164, 119)">centOS</a><a href="/tags/Algorithm/" style="font-size: 1.19em; color: rgb(88, 126, 5)">Algorithm</a><a href="/tags/Oracle/" style="font-size: 1.15em; color: rgb(134, 4, 186)">Oracle</a><a href="/tags/JS/" style="font-size: 1.15em; color: rgb(79, 64, 97)">JS</a><a href="/tags/CDN/" style="font-size: 1.15em; color: rgb(163, 173, 89)">CDN</a><a href="/tags/Thread/" style="font-size: 1.19em; color: rgb(46, 196, 82)">Thread</a><a href="/tags/VueJS/" style="font-size: 1.19em; color: rgb(72, 183, 148)">VueJS</a><a href="/tags/NodeJS/" style="font-size: 1.19em; color: rgb(17, 91, 124)">NodeJS</a><a href="/tags/Jvm/" style="font-size: 1.15em; color: rgb(3, 9, 72)">Jvm</a><a href="/tags/Video/" style="font-size: 1.15em; color: rgb(92, 135, 144)">Video</a><a href="/tags/Spring/" style="font-size: 1.15em; color: rgb(74, 38, 148)">Spring</a><a href="/tags/Android/" style="font-size: 1.15em; color: rgb(179, 196, 67)">Android</a><a href="/tags/Python/" style="font-size: 1.26em; color: rgb(73, 110, 99)">Python</a><a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 1.15em; color: rgb(27, 93, 105)">区块链</a><a href="/tags/Mysql/" style="font-size: 1.22em; color: rgb(108, 79, 37)">Mysql</a><a href="/tags/Nginx/" style="font-size: 1.19em; color: rgb(148, 24, 105)">Nginx</a><a href="/tags/Docker/" style="font-size: 1.3em; color: rgb(128, 116, 151)">Docker</a><a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 1.19em; color: rgb(71, 82, 124)">面试</a><a href="/tags/%E6%AD%A3%E5%88%99/" style="font-size: 1.15em; color: rgb(171, 170, 118)">正则</a><a href="/tags/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" style="font-size: 1.15em; color: rgb(29, 116, 169)">代码规范</a><a href="/tags/Language/" style="font-size: 1.22em; color: rgb(165, 30, 75)">Language</a><a href="/tags/Redis/" style="font-size: 1.19em; color: rgb(139, 92, 143)">Redis</a><a href="/tags/Lambda/" style="font-size: 1.15em; color: rgb(92, 34, 109)">Lambda</a><a href="/tags/Flink/" style="font-size: 1.19em; color: rgb(194, 101, 10)">Flink</a><a href="/tags/K8s/" style="font-size: 1.22em; color: rgb(127, 83, 120)">K8s</a><a href="/tags/PostgreSQL/" style="font-size: 1.15em; color: rgb(135, 79, 90)">PostgreSQL</a><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 1.15em; color: rgb(183, 72, 185)">数据库</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/12/"><span class="card-archive-list-date">十二月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/11/"><span class="card-archive-list-date">十一月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">九月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date">八月 2024</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">五月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">62</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2018-10-19T14:58:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">68.5k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-06-27T06:35:41.360Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2025 By 娃娃Code</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Never complain, never explain</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script>((window.gitter = {}).chat = {}).options = {
+  disableDefaultChat: true,
+};
+document.addEventListener('gitter-sidecar-ready', (e) => {
+  const GitterChat = e.detail.Chat
+  let chat
+
+  function initGitter () {
+    chat = new GitterChat({
+      room: 'dollcode/community',
+      activationElement: '#chat_btn'
+    });
+  }
+
+  initGitter()
+
+  if (false) {
+    document.addEventListener('pjax:complete', () => {
+      chat.destroy()
+      initGitter()
+    })
+  }
+
+})</script><script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async="async" defer="defer"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

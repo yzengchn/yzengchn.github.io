@@ -1,0 +1,205 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Centos7.3防火墙配置 | 娃娃Code</title><meta name="keywords" content="CentOS,Linux"><meta name="author" content="娃娃Code"><meta name="copyright" content="娃娃Code"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="Centos7.3防火墙配置1、查看firewall服务状态systemctl status firewalld2、查看firewall的状态firewall-cmd –state 3、开启、重启、关闭、firewalld.service服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Centos7.3防火墙配置">
+<meta property="og:url" content="https://blog.dollcode.cn/centos-iptables-config.html">
+<meta property="og:site_name" content="娃娃Code">
+<meta property="og:description" content="Centos7.3防火墙配置1、查看firewall服务状态systemctl status firewalld2、查看firewall的状态firewall-cmd –state 3、开启、重启、关闭、firewalld.service服务">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-09-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2025-06-27T06:34:56.450Z">
+<meta property="article:author" content="娃娃Code">
+<meta property="article:tag" content="CentOS">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://blog.dollcode.cn/centos-iptables-config"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7aa06d977735ba02878b576bfa4cd274";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-KPRF3Z2EG2"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KPRF3Z2EG2');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#009999","position":"top-right"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Centos7.3防火墙配置',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-06-27 06:34:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="娃娃Code" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/07/11/43BLq6fk1euSJNm.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">62</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fas fa-folder-open"></i><span> 资源库</span></a></div><div class="menus_item"><a class="site-page" href="/notes/"><i class="fa-fw fas fa-book"></i><span> 小记</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">娃娃Code</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fas fa-folder-open"></i><span> 资源库</span></a></div><div class="menus_item"><a class="site-page" href="/notes/"><i class="fa-fw fas fa-book"></i><span> 小记</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Centos7.3防火墙配置</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2018-09-18T00:00:00.000Z" title="发表于 2018-09-18 00:00:00">2018-09-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">780</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Centos7.3防火墙配置"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>Centos7.3防火墙配置<br>1、查看firewall服务状态<br>systemctl status firewalld<br>2、查看firewall的状态<br>firewall-cmd –state</p>
+<p>3、开启、重启、关闭、firewalld.service服务</p>
+<span id="more"></span>
+<h1 id="开启"><a href="#开启" class="headerlink" title="开启"></a>开启</h1><p>service firewalld start</p>
+<h1 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h1><p>service firewalld restart</p>
+<h1 id="关闭"><a href="#关闭" class="headerlink" title="关闭"></a>关闭</h1><p>service firewalld stop<br>4、查看防火墙规则<br>firewall-cmd –list-all<br>5、查询、开放、关闭端口</p>
+<h1 id="查询端口是否开放"><a href="#查询端口是否开放" class="headerlink" title="查询端口是否开放"></a>查询端口是否开放</h1><p>firewall-cmd –query-port&#x3D;8080&#x2F;tcp</p>
+<h1 id="开放80端口"><a href="#开放80端口" class="headerlink" title="开放80端口"></a>开放80端口</h1><p>firewall-cmd –permanent –add-port&#x3D;80&#x2F;tcp</p>
+<h1 id="移除端口"><a href="#移除端口" class="headerlink" title="移除端口"></a>移除端口</h1><p>firewall-cmd –permanent –remove-port&#x3D;8080&#x2F;tcp</p>
+<p>#重启防火墙(修改配置后要重启防火墙)<br>firewall-cmd –reload</p>
+<h1 id="参数解释"><a href="#参数解释" class="headerlink" title="参数解释"></a>参数解释</h1><p>1、firwall-cmd：是Linux提供的操作firewall的一个工具；<br>2、–permanent：表示设置为持久；<br>3、–add-port：标识添加的端口；</p>
+<p>清园<br>沉没的Atlantis<br>CentOS7安装iptables防火墙<br>CentOS7默认的防火墙不是iptables,而是firewalle.<br>安装iptable iptable-service</p>
+<p>#先检查是否安装了iptables<br>service iptables status<br>#安装iptables<br>yum install -y iptables<br>#升级iptables<br>yum update iptables<br>#安装iptables-services<br>yum install iptables-services</p>
+<p>禁用&#x2F;停止自带的firewalld服务<br>#停止firewalld服务<br>systemctl stop firewalld<br>#禁用firewalld服务<br>systemctl mask firewalld<br>设置现有规则</p>
+<p>#查看iptables现有规则<br>iptables -L -n<br>#先允许所有,不然有可能会杯具<br>iptables -P INPUT ACCEPT<br>#清空所有默认规则<br>iptables -F<br>#清空所有自定义规则<br>iptables -X<br>#所有计数器归0<br>iptables -Z<br>#允许来自于lo接口的数据包(本地访问)<br>iptables -A INPUT -i lo -j ACCEPT<br>#开放22端口<br>iptables -A INPUT -p tcp –dport 22 -j ACCEPT<br>#开放21端口(FTP)<br>iptables -A INPUT -p tcp –dport 21 -j ACCEPT<br>#开放80端口(HTTP)<br>iptables -A INPUT -p tcp –dport 80 -j ACCEPT<br>#开放443端口(HTTPS)<br>iptables -A INPUT -p tcp –dport 443 -j ACCEPT<br>#允许ping<br>iptables -A INPUT -p icmp –icmp-type 8 -j ACCEPT<br>#允许接受本机请求之后的返回数据 RELATED,是为FTP设置的<br>iptables -A INPUT -m state –state  RELATED,ESTABLISHED -j ACCEPT<br>#其他入站一律丢弃<br>iptables -P INPUT DROP<br>#所有出站一律绿灯<br>iptables -P OUTPUT ACCEPT<br>#所有转发一律丢弃<br>iptables -P FORWARD DROP</p>
+<p>其他规则设定</p>
+<p>#如果要添加内网ip信任（接受其所有TCP请求）<br>iptables -A INPUT -p tcp -s 45.96.174.68 -j ACCEPT<br>#过滤所有非以上规则的请求<br>iptables -P INPUT DROP<br>#要封停一个IP，使用下面这条命令：<br>iptables -I INPUT -s <em><strong>.</strong></em>.<em><strong>.</strong></em> -j DROP<br>#要解封一个IP，使用下面这条命令:<br>iptables -D INPUT -s <em><strong>.</strong></em>.<em><strong>.</strong></em> -j DROP</p>
+<p>保存规则设定<br>#保存上述规则<br>service iptables save<br>开启iptables服务 </p>
+<p>#注册iptables服务<br>#相当于以前的chkconfig iptables on<br>systemctl enable iptables.service<br>#开启服务<br>systemctl start iptables.service<br>#查看状态<br>systemctl status iptables.service</p>
+<p>解决vsftpd在iptables开启后,无法使用被动模式的问题<br>1.首先在&#x2F;etc&#x2F;sysconfig&#x2F;iptables-config中修改或者添加以下内容<br>#添加以下内容,注意顺序不能调换<br>IPTABLES_MODULES&#x3D;”ip_conntrack_ftp”<br>IPTABLES_MODULES&#x3D;”ip_nat_ftp”<br>2.重新设置iptables设置<br>iptables -A INPUT -m state –state  RELATED,ESTABLISHED -j ACCEPT</p>
+<p>以下为完整设置脚本</p>
+<p>#!&#x2F;bin&#x2F;sh<br>iptables -P INPUT ACCEPT<br>iptables -F<br>iptables -X<br>iptables -Z<br>iptables -A INPUT -i lo -j ACCEPT<br>iptables -A INPUT -p tcp –dport 22 -j ACCEPT<br>iptables -A INPUT -p tcp –dport 21 -j ACCEPT<br>iptables -A INPUT -p tcp –dport 80 -j ACCEPT<br>iptables -A INPUT -p tcp –dport 443 -j ACCEPT<br>iptables -A INPUT -p icmp –icmp-type 8 -j ACCEPT<br>iptables -A INPUT -m state –state RELATED,ESTABLISHED -j ACCEPT<br>iptables -P INPUT DROP<br>iptables -P OUTPUT ACCEPT<br>iptables -P FORWARD DROP<br>service iptables save<br>systemctl restart iptables.service</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CentOS/">CentOS</a><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/markdown-user-function.html"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">markdown基本语法使用</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/ngrok-scaffolding.html" title="CentOS搭建ngrok服务器与客户端应用程序"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-11-12</div><div class="title">CentOS搭建ngrok服务器与客户端应用程序</div></div></a></div><div><a href="/nginx-createuser.html" title="nginx指定用户报错&quot;nginx:[emerg] getpwnam&quot;"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-11-21</div><div class="title">nginx指定用户报错&quot;nginx:[emerg] getpwnam&quot;</div></div></a></div><div><a href="/docker-time.html" title="Docker 修改镜像容器的时区"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-07</div><div class="title">Docker 修改镜像容器的时区</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%80%E5%90%AF"><span class="toc-number">1.</span> <span class="toc-text">开启</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%87%8D%E5%90%AF"><span class="toc-number">2.</span> <span class="toc-text">重启</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E9%97%AD"><span class="toc-number">3.</span> <span class="toc-text">关闭</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E7%AB%AF%E5%8F%A3%E6%98%AF%E5%90%A6%E5%BC%80%E6%94%BE"><span class="toc-number">4.</span> <span class="toc-text">查询端口是否开放</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%80%E6%94%BE80%E7%AB%AF%E5%8F%A3"><span class="toc-number">5.</span> <span class="toc-text">开放80端口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A7%BB%E9%99%A4%E7%AB%AF%E5%8F%A3"><span class="toc-number">6.</span> <span class="toc-text">移除端口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E8%A7%A3%E9%87%8A"><span class="toc-number">7.</span> <span class="toc-text">参数解释</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2025 By 娃娃Code</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Never complain, never explain</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script>((window.gitter = {}).chat = {}).options = {
+  disableDefaultChat: true,
+};
+document.addEventListener('gitter-sidecar-ready', (e) => {
+  const GitterChat = e.detail.Chat
+  let chat
+
+  function initGitter () {
+    chat = new GitterChat({
+      room: 'dollcode/community',
+      activationElement: '#chat_btn'
+    });
+  }
+
+  initGitter()
+
+  if (false) {
+    document.addEventListener('pjax:complete', () => {
+      chat.destroy()
+      initGitter()
+    })
+  }
+
+})</script><script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async="async" defer="defer"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

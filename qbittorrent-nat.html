@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>qbittorrent内网穿透解决端口阻塞 | 娃娃Code</title><meta name="keywords" content="Linux"><meta name="author" content="娃娃Code"><meta name="copyright" content="娃娃Code"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="前提场景在qbittorrent没有公网IP，并且也开不了路由器端口转发的情况下，通过一台公网服务器中转，进行Socket5代理和内网穿透，解决qbittorrent端口阻塞问题。主要用到以下软件：  Frp内网穿透 gost代理  公网机器配置 公网机器 用来让内网中的qbittorrent客户端机器获取公网IP，同时转发客户端的端口流量。  启动gost1234.&#x2F;gost -L&#x3D;qbadmi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="qbittorrent内网穿透解决端口阻塞">
+<meta property="og:url" content="https://blog.dollcode.cn/qbittorrent-nat.html">
+<meta property="og:site_name" content="娃娃Code">
+<meta property="og:description" content="前提场景在qbittorrent没有公网IP，并且也开不了路由器端口转发的情况下，通过一台公网服务器中转，进行Socket5代理和内网穿透，解决qbittorrent端口阻塞问题。主要用到以下软件：  Frp内网穿透 gost代理  公网机器配置 公网机器 用来让内网中的qbittorrent客户端机器获取公网IP，同时转发客户端的端口流量。  启动gost1234.&#x2F;gost -L&#x3D;qbadmi">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-01T00:00:00.000Z">
+<meta property="article:modified_time" content="2025-06-27T06:34:56.452Z">
+<meta property="article:author" content="娃娃Code">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://blog.dollcode.cn/qbittorrent-nat"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7aa06d977735ba02878b576bfa4cd274";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-KPRF3Z2EG2"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KPRF3Z2EG2');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#009999","position":"top-right"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'qbittorrent内网穿透解决端口阻塞',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-06-27 06:34:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="娃娃Code" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2022/07/11/43BLq6fk1euSJNm.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">62</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fas fa-folder-open"></i><span> 资源库</span></a></div><div class="menus_item"><a class="site-page" href="/notes/"><i class="fa-fw fas fa-book"></i><span> 小记</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">娃娃Code</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fas fa-folder-open"></i><span> 资源库</span></a></div><div class="menus_item"><a class="site-page" href="/notes/"><i class="fa-fw fas fa-book"></i><span> 小记</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">qbittorrent内网穿透解决端口阻塞</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2022-12-01T00:00:00.000Z" title="发表于 2022-12-01 00:00:00">2022-12-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">595</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="qbittorrent内网穿透解决端口阻塞"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h2 id="前提场景"><a href="#前提场景" class="headerlink" title="前提场景"></a>前提场景</h2><p>在qbittorrent没有公网IP，并且也开不了路由器端口转发的情况下，<strong>通过一台公网服务器中转</strong>，进行Socket5代理和内网穿透，解决qbittorrent端口阻塞问题。<br>主要用到以下软件：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fatedier/frp/releases">Frp内网穿透</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ginuerzh/gost/releases">gost代理</a></li>
+</ul>
+<h2 id="公网机器配置"><a href="#公网机器配置" class="headerlink" title="公网机器配置"></a>公网机器配置</h2><blockquote>
+<p>公网机器 用来让内网中的qbittorrent客户端机器获取公网IP，同时转发客户端的端口流量。</p>
+</blockquote>
+<h3 id="启动gost"><a href="#启动gost" class="headerlink" title="启动gost"></a>启动gost</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./gost -L=qbadmin:123456@blog.dollcode.cn:8081</span><br><span class="line"></span><br><span class="line">//执行之后会输出如下日志就是正常成功了</span><br><span class="line">2022/12/01 03:11:45 route.go:694: auto://blog.dollcode.cn:8081 on xxx.xxx.xxx.xxx:8081</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>配置说明：</p>
+<ul>
+<li>代表开启一个Socket5代理</li>
+<li>用户名是：qbadmin；密码是：123456</li>
+<li>IP是：blog.dollcode.cn(可以用域名也可以用IP)</li>
+<li>端口是：8081</li>
+</ul>
+</blockquote>
+<h3 id="启动frps"><a href="#启动frps" class="headerlink" title="启动frps"></a>启动frps</h3><p>frp有两个包：frps是服务器端；frpc是客户端。这里我们配置frps的配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line"># 允许任意IP</span><br><span class="line">bind_addr = 0.0.0.0</span><br><span class="line"># udp端口</span><br><span class="line">bind_udp_port = 8080</span><br><span class="line"># tcp端口</span><br><span class="line">bind_port = 8080</span><br><span class="line"># 安全连接</span><br><span class="line">tls_only = true</span><br><span class="line"># 连接密钥</span><br><span class="line">token = dollcode</span><br><span class="line"># 日志文件路径</span><br><span class="line">log_file = ./frps.log</span><br><span class="line"># 日志级别</span><br><span class="line">log_level = info</span><br><span class="line"># 日志文件保存天数</span><br><span class="line">log_max_days = 3</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 执行启动命令</span><br><span class="line">./frps -c frps.conf</span><br><span class="line"></span><br><span class="line">// 查看启动日志，输出如下就是正常成功了</span><br><span class="line">2022/12/01 03:07:04 [I] [service.go:152] frps tcp listen on 0.0.0.0:8080</span><br><span class="line">2022/12/01 03:07:04 [I] [service.go:233] nat hole udp service listen on 0.0.0.0:8080</span><br><span class="line">2022/12/01 03:07:04 [I] [root.go:205] start frps success</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>上面指定的8080端口和8081端口，需要在服务器的防火墙中放开该端口</p>
+</blockquote>
+<h2 id="qbittorrent客户端机器配置"><a href="#qbittorrent客户端机器配置" class="headerlink" title="qbittorrent客户端机器配置"></a>qbittorrent客户端机器配置</h2><blockquote>
+<p>内网客户端 用来qbittorrent下载</p>
+</blockquote>
+<h3 id="启动frpc"><a href="#启动frpc" class="headerlink" title="启动frpc"></a>启动frpc</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line"># 公网服务器的IP或域名</span><br><span class="line">server_addr = blog.dollcode.cn</span><br><span class="line"># 公网机器隧道端口</span><br><span class="line">server_port = 8080 </span><br><span class="line">tls_enable = true</span><br><span class="line">token = dollcode</span><br><span class="line"></span><br><span class="line"># 58736这个端口就是qbittorrent的连接端口</span><br><span class="line">[tcppt]</span><br><span class="line">type = tcp</span><br><span class="line">local_ip = 127.0.0.1</span><br><span class="line">local_port = 58736</span><br><span class="line">remote_port = 58736</span><br><span class="line"></span><br><span class="line">[udppt]</span><br><span class="line">type = udp</span><br><span class="line">local_ip = 127.0.0.1</span><br><span class="line">local_port = 58736</span><br><span class="line">remote_port = 58736</span><br></pre></td></tr></table></figure>
+<p><img src="/img/article/20221201112108.png"></p>
+<p>启动之后可以看到连接成功的日志<br><img src="/img/article/20221201111614.png"></p>
+<h3 id="配置qbittorrent代理"><a href="#配置qbittorrent代理" class="headerlink" title="配置qbittorrent代理"></a>配置qbittorrent代理</h3><p>填入服务器gost设置的配置即可<br><img src="/img/article/20221201113249.png"></p>
+<p>退出软件重新进入，就可以看到绿灯亮了<br><img src="/img/article/20221201113536.png"></p>
+<p>至此，整个内网穿透和Socket5代理就全部完成了。可以开始愉快的下载啦！！！</p>
+<h3 id="超时问题解决"><a href="#超时问题解决" class="headerlink" title="超时问题解决"></a>超时问题解决</h3><p><img src="/img/article/20221201112138.png"><br><strong>如果qbittorrent日志中出现连接超时，一般就是服务器防火墙端口没开，或者账号密码输错了，记得检查一下哦！</strong></p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/nas-transmission4.html"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">群晖7.0安装Transmission4.0挂PT(docker版)</div></div></a></div><div class="next-post pull-right"><a href="/linux-lnlink.html"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">linux 软连接link的使用</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/centos-iptables-config.html" title="Centos7.3防火墙配置"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-18</div><div class="title">Centos7.3防火墙配置</div></div></a></div><div><a href="/the-nginx-software.html" title="nginx常用命令和基本操作及问题解决"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-10-19</div><div class="title">nginx常用命令和基本操作及问题解决</div></div></a></div><div><a href="/StudyVideo.html" title="看了不一定会,不看肯定不会系列"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-11-06</div><div class="title">看了不一定会,不看肯定不会系列</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E6%8F%90%E5%9C%BA%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">前提场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AC%E7%BD%91%E6%9C%BA%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">公网机器配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8gost"><span class="toc-number">2.1.</span> <span class="toc-text">启动gost</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8frps"><span class="toc-number">2.2.</span> <span class="toc-text">启动frps</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qbittorrent%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9C%BA%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">qbittorrent客户端机器配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8frpc"><span class="toc-number">3.1.</span> <span class="toc-text">启动frpc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEqbittorrent%E4%BB%A3%E7%90%86"><span class="toc-number">3.2.</span> <span class="toc-text">配置qbittorrent代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-number">3.3.</span> <span class="toc-text">超时问题解决</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2025 By 娃娃Code</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Never complain, never explain</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script>((window.gitter = {}).chat = {}).options = {
+  disableDefaultChat: true,
+};
+document.addEventListener('gitter-sidecar-ready', (e) => {
+  const GitterChat = e.detail.Chat
+  let chat
+
+  function initGitter () {
+    chat = new GitterChat({
+      room: 'dollcode/community',
+      activationElement: '#chat_btn'
+    });
+  }
+
+  initGitter()
+
+  if (false) {
+    document.addEventListener('pjax:complete', () => {
+      chat.destroy()
+      initGitter()
+    })
+  }
+
+})</script><script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async="async" defer="defer"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
